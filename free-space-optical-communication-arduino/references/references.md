@@ -9,3 +9,9 @@ As listed in the FYP report:
 5. "Photodiode BPW34 Data sheet."
 6. "Laser Module Data sheet."
 7. "Op-Amp LM358 Data sheet."
+
+The Arduino Uno is used as the transmitter and receiver controller [2].
+
+The BPW34 photodiode is used for optical signal detection [6].
+
+The LM358 is used to amplify the received signal [8].
