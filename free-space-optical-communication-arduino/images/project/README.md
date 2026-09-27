@@ -1,1 +1,2 @@
-Place project photos here (e.g. breadboard photos, test setup, results screenshots).
+Complete Project concept here describe.
+
