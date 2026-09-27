@@ -1,12 +1,13 @@
 # Results and Discussion
 
-Source: FYP report, Chapter 4 ("Results and Discussion") and Chapter 5 ("Conclusion and Future Expansion").
-
 ## Graphical analysis (Section 4.1)
 
 The report presents two theoretical/graphical relationships (plotted, not raw experimental data tables):
 
 - **Distance vs. signal strength:** the report states signal strength *I* is inversely proportional to the square of distance *d* (an inverse-square relationship, *I ∝ 1/d²*), and shows a graph of relative signal strength dropping sharply from 1 m to about 8 m.
+
+![FSO Communication System](images/system-overview.png)
+
 - **Light intensity vs. photodiode output:** the report gives the relationship *I_photo = R · P_light* (photocurrent proportional to incident light power) and shows a graph of photodiode output voltage rising with light intensity (mW/cm²) before leveling off toward saturation around 8-10 mW/cm².
 
 ## Transmission distance analysis (Section 4.2)
