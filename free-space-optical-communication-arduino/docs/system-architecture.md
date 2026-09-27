@@ -1,7 +1,5 @@
 # System Architecture
 
-Source: FYP report, Figure 3.1 ("Complete Project Working Concept") and Figure 3.2 ("Complete Project Circuits Diagrams"), Section 3.3.
-
 ## Signal path
 
 ```text
@@ -32,22 +30,9 @@ Receiver Arduino Uno
 Serial Monitor (message displayed)
 ```
 
-This mirrors Figure 3.1 in the report, which shows the transmitter chain as **Text/Data -> Arduino UNO -> LASER Driver -> LASER Module**, a **Free Space** gap, and the receiver chain as **Photodiode -> Amplifier (LM358) -> Arduino UNO -> Serial Monitor / LED / Speaker**.
-
-```mermaid
-flowchart LR
-    A[Text / Data] --> B[Transmitter Arduino Uno]
-    B --> C[Laser Driver - NPN transistor stage]
-    C --> D[Laser Module - 650 nm, OOK]
-    D -.->|Free-Space Optical Channel| E[Photodiode BPW34]
-    E --> F[Amplifier LM358]
-    F --> G[Receiver Arduino Uno]
-    G --> H[Serial Monitor]
-```
-
 ## Modulation
 
-The report specifies **On-Off Keying (OOK)**, a digital modulation scheme where the laser carrier is switched on for binary '1' and off for binary '0' (Section 3.3.1):
+The report specifies **On-Off Keying (OOK)**, a digital modulation scheme where the laser carrier is switched on for binary '1' and off for binary '0' :
 
 ```
 s(t) = A·cos(2πft)   for binary 1
