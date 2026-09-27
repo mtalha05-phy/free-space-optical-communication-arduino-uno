@@ -1,8 +1,6 @@
 # Hardware Components
 
-This list is taken from the FYP report, Table 2.1 ("Components Used"), Chapter 2 ("Description of Components"), and the detailed wiring description in Section 3.2 ("Connections").
-
-## Summary table (Report Table 2.1)
+## Summary table
 
 | # | Component | Quantity | Description (as given in report) |
 |---|---|---:|---|
@@ -16,7 +14,7 @@ This list is taken from the FYP report, Table 2.1 ("Components Used"), Chapter 2
 | 8 | Jumper Wires | Various | Connecting wires |
 | 9 | Power Adapter | 1 | Power supply, ~5 V / 2 A |
 
-## Component notes (from Chapter 2)
+## Component notes
 
 - **Arduino Uno** — ATmega328-based board, 14 digital I/O pins (6 PWM-capable), 6 analog input pins, 16 MHz clock, programmed via the Arduino IDE.
 - **Laser Module** — 5 V laser diode module with a built-in driver circuit; three terminals (VCC, GND, Signal); lasing wavelength 655–670 nm; used as the transmitter element.
