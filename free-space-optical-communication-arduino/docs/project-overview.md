@@ -2,11 +2,11 @@
 
 Source: FYP report, Abstract and Chapter 1 ("Introduction").
 
-## Abstract (as stated in the report)
+## Abstract
 
 Free Space Optical (FSO) communication is described in the report as an emerging wireless communication technology that uses light instead of radio waves to transmit information through free space, offering high bandwidth and immunity to electromagnetic interference, and used by satellites, military systems, and industrial automation. The objective of this project was to design and develop a low-cost FSO communication system using a laser diode, a BPW34 photodiode, an LM358 operational amplifier, and Arduino Uno microcontrollers.
 
-## Problem Statement (Section 1.1)
+## Problem Statement 
 
 The report identifies the following limitations of traditional (RF) wireless systems as motivation for the project:
 
@@ -17,21 +17,21 @@ The report identifies the following limitations of traditional (RF) wireless sys
 
 The project's stated aim is to develop a free-space optical communication system using laser light to reduce these limitations for specific applications.
 
-## Project Overview (Section 1.2)
+## Project Overview
 
-The report frames the project as an exploration of a laser-based wireless communication system built from readily available components, using two Arduino Uno boards as the transmitter and receiver processing units. It notes that the same underlying principle is used in advanced space optical communication systems, citing communication links between the Moon and Earth as an example of the broader technology (this is presented in the report as context/motivation, not as something the prototype itself achieves — see [Limitations](results.md#limitations)).
+The project of a laser based wireless communication system built from readily available components, using two Arduino Uno boards as the transmitter and receiver processing units. It notes that the same underlying principle is used in advanced space optical communication systems, citing communication links between the Moon and Earth as an example of the broader technology (this is presented in the report as context/motivation, not as something the prototype itself achieves — see [Limitations](results.md#limitations)).
 
-## Objectives (Section 1.3)
+## Objectives
 
-As stated in the report, the primary objectives were to:
+The primary objectives were to:
 
 - Design and implement a laser-based wireless communication system using Arduino Uno.
 - Develop transmitter and receiver circuits for data transmission.
 - Learn and implement Arduino programming using the Arduino IDE.
 - Evaluate the system's performance.
-- Demonstrate practical applications of wireless communication using a laser.
+- Demonstrate practical applications of wireless communication in low cost.
 
-## Working Principle (Section 1.4)
+## Working Principle
 
 The report summarizes the system's operating principle as:
 
