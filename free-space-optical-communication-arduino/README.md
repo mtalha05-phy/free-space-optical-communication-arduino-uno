@@ -287,51 +287,17 @@ The references include the sources documented in the original FYP report, includ
 
 ### Project Team
 
-|  # | Name                      |
-| -: | ------------------------- |
-|  1 | **Arslan Maqsood**        |
-|  2 | **Muhammad Talha**        |
-|  3 | **Muhammad Sajid**        |
-|  4 | **Muhammad Azam Mustafa** |
-|  5 | **Muhammad Danish**       |
-|  6 | **Sajid Ali**             |
+|  # | Name                      :  Roll No.  |
+| -: | ---------------------------------------|
+|  1 | **Arslan Maqsood**        : BSSP-21-02 |
+|  2 | **Muhammad Talha**        : BSSP-21-17 |
+|  3 | **Muhammad Azam Mustafa** : BSSP-21-43 |
+|  4 | **Sajid Ali**             : BSSP-21-58 |
 
 ### 👨‍🏫 Supervisor
 
 **Mr. M. Khalid Saleem**
 
-Department of Physics
+Assosiate Professor Department of Physics
 Government Graduate College, Sahiwal
-
----
-
-# 🎓 Academic Context
-
-This project was completed as a **BS Physics Final Year Project** and combines concepts from:
-
-```text
-Physics
-   │
-   ├── Optics
-   ├── Electromagnetism
-   ├── Photodetection
-   └── Optical Communication
-          │
-          ▼
-Electronics
-   │
-   ├── Operational Amplifiers
-   ├── Transistor Switching
-   ├── Signal Amplification
-   └── Photodiodes
-          │
-          ▼
-Embedded Systems
-   │
-   ├── Arduino
-   ├── Serial Communication
-   └── Digital Data Processing
-```
-
-The project therefore provides a practical connection between **physics, optical communication, electronics, and embedded systems**.
 
