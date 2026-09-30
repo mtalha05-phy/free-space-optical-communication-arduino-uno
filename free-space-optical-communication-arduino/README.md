@@ -90,10 +90,6 @@ flowchart TB
 
 ### Transmitter
 
-<p align="center">
-  <img src="images/hardware/transmitter.jpg" alt="FSO Transmitter Hardware" width="80%">
-</p>
-
 The transmitter consists primarily of:
 
 ```text
@@ -109,10 +105,6 @@ NPN Transistor Driver
 ```
 
 ### Receiver
-
-<p align="center">
-  <img src="images/hardware/receiver.jpg" alt="FSO Receiver Hardware" width="80%">
-</p>
 
 The receiver consists primarily of:
 
