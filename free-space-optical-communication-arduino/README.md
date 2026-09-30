@@ -38,55 +38,7 @@ The same general physical principle is relevant to more advanced optical communi
 
 The complete communication chain is:
 
-```text
-┌────────────────────┐
-│ Computer / Serial  │
-│ Monitor            │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ Transmitter        │
-│ Arduino Uno        │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ OOK Modulation     │
-│ Digital Data       │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ 650 nm Laser       │
-│ Optical Transmitter│
-└─────────┬──────────┘
-          │
-          │  FREE-SPACE
-          │  OPTICAL CHANNEL
-          ▼
-┌────────────────────┐
-│ BPW34 Photodiode   │
-│ Optical Receiver   │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ LM358 Amplifier    │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ Receiver Arduino   │
-│ Uno                │
-└─────────┬──────────┘
-          │
-          ▼
-┌────────────────────┐
-│ Computer / Serial  │
-│ Monitor            │
-└────────────────────┘
-```
+![System Architecture](free-space-optical-communication-arduino/images/project/Circuit%20complete%20working%20concept.png)
 
 # ⚙️ How It Works
 
