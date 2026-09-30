@@ -38,7 +38,7 @@ The same general physical principle is relevant to more advanced optical communi
 
 The complete communication chain is:
 
-![System Architecture](free-space-optical-communication-arduino/images/project/Circuit%20complete%20working%20concept.png)
+![System Architecture](/free-space-optical-communication-arduino/images/project/Circuit%20complete%20working%20concept.png)
 
 # ⚙️ How It Works
 
