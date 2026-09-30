@@ -88,10 +88,10 @@ The complete communication chain is:
 └────────────────────┘
 ```
 
-### Mermaid Architecture
+# ⚙️ How It Works
 
 ```mermaid
-flowchart LR
+flowchart TB
 
     A["💻 Transmitter Computer<br/>Serial Monitor"]
     B["🔌 Transmitter Arduino"]
@@ -117,96 +117,6 @@ flowchart LR
 
 [`docs/system-architecture.md`](docs/system-architecture.md)
 
----
-
-# ⚙️ How It Works
-
-The communication process can be summarized in eight stages.
-
-### 1️⃣ Enter the Message
-
-The user types a message into the transmitter computer's Arduino Serial Monitor.
-
-```text
-Input:
-HELLO
-```
-
-### 2️⃣ Arduino Reads the Character
-
-The transmitter Arduino receives each character through its hardware serial interface.
-
-### 3️⃣ OOK Encoding
-
-The character is transferred through the laser communication channel using an **8-bit digital representation**.
-
-The laser is switched:
-
-```text
-ON  → Binary 1
-OFF → Binary 0
-```
-
-This is the basic principle of **On-Off Keying (OOK)**.
-
-### 4️⃣ Optical Transmission
-
-The 650 nm laser converts the electrical switching signal into an optical signal.
-
-```text
-Electrical Signal
-       ↓
-Laser Driver
-       ↓
-650 nm Light
-       ↓
-Free Space
-```
-
-### 5️⃣ Optical Detection
-
-At the receiver, the **BPW34 photodiode** detects the incoming laser light.
-
-The optical signal produces a small photocurrent.
-
-### 6️⃣ Signal Amplification
-
-Because the photodiode output is weak, the signal is amplified using an **LM358 operational amplifier**.
-
-```text
-BPW34 Photodiode
-       ↓
-Weak Photocurrent
-       ↓
-LM358 Amplifier
-       ↓
-Stronger Electrical Signal
-```
-
-### 7️⃣ Arduino Decoding
-
-The receiver Arduino reads the amplified signal through its `SoftwareSerial` communication channel.
-
-### 8️⃣ Message Recovery
-
-The decoded message is displayed on the receiver computer's Serial Monitor.
-
-```text
-Transmitter:
-
-HELLO
-  │
-  ▼
-Laser Beam
-  │
-  ▼
-Receiver
-  │
-  ▼
-HELLO
-```
-
----
 
 # 🛠️ Hardware
 
