@@ -1,215 +1,873 @@
-# Free Space Optical Communication System Using Laser Diode and Arduino
+## 📌 Project Overview
 
-A low-cost, point-to-point **Free Space Optical (FSO) communication** prototype that transmits text data through a modulated 650 nm laser beam and recovers it on a receiver built around a BPW34 photodiode, an LM358 amplifier, and a second Arduino Uno. Built as a BS Physics Final Year Project at the Department of Physics, Government Graduate College, Sahiwal.
+This project presents a **low-cost Free Space Optical (FSO) communication prototype** capable of transmitting text data through open air using a modulated **650 nm laser beam**.
 
-> This repository documents the project exactly as reported in the accompanying FYP report ([docs/project-report.pdf](docs/project-report.pdf)). No specifications, results, or features beyond what the report states are claimed here — see [Implementation Notes / Report Clarifications](#implementation-notes--report-clarifications) for a few places where the report itself is inconsistent.
+The transmitter uses an **Arduino Uno** to process text entered through a Serial Monitor and control the laser using **On-Off Keying (OOK)**. At the receiver, a **BPW34 photodiode** detects the optical signal, while an **LM358 operational amplifier** amplifies the weak electrical signal before it is processed by a second Arduino Uno.
 
-## Description
+The recovered message is finally displayed on the receiver computer through the Arduino Serial Monitor.
 
-This project demonstrates a laser-based wireless link that sends text typed into a Serial Monitor across free space and displays it on a second computer's Serial Monitor, without any wires or radio-frequency hardware in between. The transmitter Arduino modulates a 650 nm laser using On-Off Keying (OOK); the receiver uses a BPW34 photodiode and an LM358 op-amp to recover and amplify the optical signal before a second Arduino decodes and displays it.
+---
 
-## Project Overview
+## ✨ Key Features
 
-Free Space Optical (FSO) communication uses light instead of radio waves to carry information through open space, offering high bandwidth, immunity to electromagnetic interference, and (due to its narrow, directional beam) a degree of inherent security — advantages the report cites as motivation, alongside noting that the same underlying principle underlies advanced systems such as satellite and deep-space laser links. This prototype demonstrates the basic building blocks of such a link at a small, benchtop scale: an Arduino-driven laser transmitter and a photodiode-based receiver with amplification and decoding. It is intended, per the report, "for educational and prototyping purposes."
+- 🔴 650 nm laser-based optical transmitter
+- 📡 Point-to-point free-space optical communication
+- 💡 On-Off Keying (OOK) digital modulation
+- 🔬 BPW34 photodiode optical receiver
+- ⚡ LM358-based signal amplification
+- 🔌 Two Arduino Uno boards for processing
+- 💻 Serial Monitor based text transmission
+- 📏 Indoor communication testing up to approximately **8 m**
+- 🧪 Low-cost prototype using readily available components
+- 🛠️ Designed primarily for educational and prototyping purposes
 
-For the full write-up (problem statement, objectives, and scope), see [docs/project-overview.md](docs/project-overview.md).
+---
 
-## System Architecture
+# 🔬 About Free Space Optical Communication
+
+Free Space Optical communication transfers information through **light propagating through free space**, rather than using a conventional radio-frequency wireless channel.
+FSO systems are attractive because optical beams can provide highly directional communication and can avoid electromagnetic interference associated with conventional RF links.
+
+The same general physical principle is relevant to more advanced optical communication systems, including terrestrial, satellite, and deep-space optical links.
+
+> **Important:** The advanced applications mentioned in the project report are discussed as potential applications of the underlying technology. They are **not capabilities demonstrated by this prototype**.
+
+---
+
+# 🧩 System Architecture
+
+The complete communication chain is:
 
 ```text
-Computer / Serial Monitor
-        |
-        v
-Transmitter Arduino
-        |
-        v
-Digital Data / On-Off Keying (OOK)
-        |
-        v
-Laser Module (650 nm)
-        |
-        v
-Free-Space Optical Channel
-        |
-        v
-BPW34 Photodiode
-        |
-        v
-LM358 Amplifier
-        |
-        v
-Receiver Arduino
-        |
-        v
-Serial Monitor
+┌────────────────────┐
+│ Computer / Serial  │
+│ Monitor            │
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│ Transmitter        │
+│ Arduino Uno        │
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│ OOK Modulation     │
+│ Digital Data       │
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│ 650 nm Laser       │
+│ Optical Transmitter│
+└─────────┬──────────┘
+          │
+          │  FREE-SPACE
+          │  OPTICAL CHANNEL
+          ▼
+┌────────────────────┐
+│ BPW34 Photodiode   │
+│ Optical Receiver   │
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│ LM358 Amplifier    │
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│ Receiver Arduino   │
+│ Uno                │
+└─────────┬──────────┘
+          │
+          ▼
+┌────────────────────┐
+│ Computer / Serial  │
+│ Monitor            │
+└────────────────────┘
 ```
+
+### Mermaid Architecture
 
 ```mermaid
 flowchart LR
-    A[Computer / Serial Monitor] --> B[Transmitter Arduino]
-    B --> C[OOK Modulation]
-    C --> D[Laser Module]
-    D --> E[Free-Space Optical Channel]
-    E --> F[BPW34 Photodiode]
-    F --> G[LM358 Amplifier]
-    G --> H[Receiver Arduino]
-    H --> I[Serial Monitor]
+
+    A["💻 Transmitter Computer<br/>Serial Monitor"]
+    B["🔌 Transmitter Arduino"]
+    C["〰️ OOK Modulation"]
+    D["🔴 650 nm Laser"]
+    E["🌐 Free-Space Optical Channel"]
+    F["🔬 BPW34 Photodiode"]
+    G["⚡ LM358 Amplifier"]
+    H["🔌 Receiver Arduino"]
+    I["💻 Receiver Computer<br/>Serial Monitor"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
 ```
 
-Full detail: [docs/system-architecture.md](docs/system-architecture.md)
+📄 Detailed architecture:
 
-## Features
+[`docs/system-architecture.md`](docs/system-architecture.md)
 
-Only features documented in the report are listed here:
+---
 
-- Free-space optical (laser-based) data transmission
-- Laser-diode transmitter, driven through an NPN transistor stage
-- BPW34 photodiode receiver with LM358 signal amplification
-- Arduino-based encoding/decoding on both ends
-- On-Off Keying (OOK) digital modulation
-- Text output via the Arduino Serial Monitor
-- Short-range, point-to-point communication (tested up to ~8 m indoors)
-- Low-cost prototype built from readily available components
+# ⚙️ How It Works
 
-## Hardware
+The communication process can be summarized in eight stages.
 
-| Component | Quantity | Purpose |
-| --- | ---: | --- |
-| Arduino Uno | 2 | Transmitter and receiver processing |
-| Laser Module (650 nm) | 1 | Optical transmitter |
-| BPW34 Photodiode | 1 | Optical receiver |
-| LM358 Op-Amp | 1 | Signal amplification |
-| NPN Transistor | 1 | Laser switching/driver (see [transistor naming note](#implementation-notes--report-clarifications)) |
-| Resistors | Various | Biasing / current limiting / gain-setting (see [resistor values note](#implementation-notes--report-clarifications)) |
-| Breadboard | 1 | Circuit prototyping |
-| Jumper Wires | Various | Connections |
-| Power Adapter | 1 | ~5 V / 2 A system power |
+### 1️⃣ Enter the Message
 
-Full component descriptions: [hardware/components.md](hardware/components.md)
+The user types a message into the transmitter computer's Arduino Serial Monitor.
 
-## Software
+```text
+Input:
+HELLO
+```
 
-- **Arduino IDE** — used to write and upload both sketches.
-- **C/C++** — the language Arduino sketches are written in.
-- **SoftwareSerial library** — used on both the transmitter and receiver to create a second serial channel dedicated to the laser link, separate from the hardware serial connection to each computer's Serial Monitor.
+### 2️⃣ Arduino Reads the Character
 
-## How It Works
+The transmitter Arduino receives each character through its hardware serial interface.
 
-1. A user types a message into the transmitter computer's Serial Monitor.
-2. The transmitter Arduino reads each character as it arrives.
-3. The Arduino forwards the character over `SoftwareSerial` to the laser driver stage, which switches the laser on and off in the corresponding 8-bit binary / OOK pattern.
-4. The laser light propagates across the free-space optical channel.
-5. The BPW34 photodiode at the receiver detects the incoming light pulses and converts them to a weak photocurrent.
-6. The LM358 op-amp amplifies this signal to a usable level.
-7. The receiver Arduino reads the amplified signal over its own `SoftwareSerial` channel and reconstructs each character.
-8. The recovered message is printed to the receiver computer's Serial Monitor.
+### 3️⃣ OOK Encoding
 
-## Arduino Code
+The character is transferred through the laser communication channel using an **8-bit digital representation**.
 
-**Transmitter:** [`arduino/transmitter/transmitter.ino`](arduino/transmitter/transmitter.ino)
-**Receiver:** [`arduino/receiver/receiver.ino`](arduino/receiver/receiver.ino)
+The laser is switched:
 
-Both sketches are reproduced from the report's Program Code section (3.3.4) with explanatory comments added; no functional changes were made to the logic.
+```text
+ON  → Binary 1
+OFF → Binary 0
+```
 
-## Circuit Connections
+This is the basic principle of **On-Off Keying (OOK)**.
 
-- **Transmitter side:** [hardware/transmitter-connections.md](hardware/transmitter-connections.md)
-- **Receiver side:** [hardware/receiver-connections.md](hardware/receiver-connections.md)
-- **Circuit diagram (as drawn in the report):** [hardware/circuit-diagram/](hardware/circuit-diagram/) (see note below)
+### 4️⃣ Optical Transmission
 
-> **Note:** the original circuit diagram (report Figure 3.2) exists only as an embedded image inside the PDF report ([docs/project-report.pdf](docs/project-report.pdf), page 18); it has not been re-drawn or extracted as a separate image file here to avoid introducing errors. The `hardware/circuit-diagram/` folder is provided as a placeholder if you'd like to add an extracted or redrawn version.
+The 650 nm laser converts the electrical switching signal into an optical signal.
 
-## Results
+```text
+Electrical Signal
+       ↓
+Laser Driver
+       ↓
+650 nm Light
+       ↓
+Free Space
+```
 
-Tested indoors under clear line-of-sight conditions:
+### 5️⃣ Optical Detection
 
-| Distance | Performance |
-| --- | --- |
-| 1–2 m | Excellent |
-| 2–3 m | Good (stable) |
-| 3–7 m | Moderate (some noise) |
-| > 7 m | Degraded |
+At the receiver, the **BPW34 photodiode** detects the incoming laser light.
 
-Test messages "HELLO", "12345678", and "Laser" were transmitted and received correctly. Sunlight and artificial light were noted as noise sources, addressed with optical shielding and a filtering capacitor.
+The optical signal produces a small photocurrent.
 
-Full results and discussion: [docs/results.md](docs/results.md)
+### 6️⃣ Signal Amplification
 
-## Limitations
+Because the photodiode output is weak, the signal is amplified using an **LM358 operational amplifier**.
 
-As stated in the report:
+```text
+BPW34 Photodiode
+       ↓
+Weak Photocurrent
+       ↓
+LM358 Amplifier
+       ↓
+Stronger Electrical Signal
+```
 
-1. Requires a clear line of sight between transmitter and receiver.
-2. Affected by fog, rain, and dust.
-3. Speed is limited by Arduino timing delay.
-4. Requires precise alignment between transmitter and receiver.
+### 7️⃣ Arduino Decoding
 
-## Applications and Future Work
+The receiver Arduino reads the amplified signal through its `SoftwareSerial` communication channel.
 
-The report discusses these as potential applications/extensions of the underlying technology (not as capabilities this prototype itself demonstrates): Moon–Earth/Earth–Moon communication, satellite and space communication, military/secure communication, Li-Fi, industrial automation, and medical technology. Details: [docs/results.md](docs/results.md#applications-and-future-expansion-section-52).
+### 8️⃣ Message Recovery
 
-## Repository Structure
+The decoded message is displayed on the receiver computer's Serial Monitor.
+
+```text
+Transmitter:
+
+HELLO
+  │
+  ▼
+Laser Beam
+  │
+  ▼
+Receiver
+  │
+  ▼
+HELLO
+```
+
+---
+
+# 🛠️ Hardware
+
+| Component           |   Qty.  | Function                                   |
+| ------------------- | :-----: | ------------------------------------------ |
+| Arduino Uno         |    2    | Transmitter and receiver processing        |
+| 650 nm Laser Module |    1    | Optical transmitter                        |
+| BPW34 Photodiode    |    1    | Optical receiver                           |
+| LM358 Op-Amp        |    1    | Signal amplification                       |
+| NPN Transistor      |    1    | Laser switching / driver                   |
+| Resistors           | Various | Biasing, current limiting and gain setting |
+| Breadboard          |    1    | Circuit prototyping                        |
+| Jumper Wires        | Various | Electrical connections                     |
+| Power Adapter       |    1    | Approximately 5 V / 2 A system power       |
+
+---
+
+## 🔧 Hardware Setup
+
+### Transmitter
+
+<p align="center">
+  <img src="images/hardware/transmitter.jpg" alt="FSO Transmitter Hardware" width="80%">
+</p>
+
+The transmitter consists primarily of:
+
+```text
+Computer
+   ↓
+Arduino Uno
+   ↓
+SoftwareSerial
+   ↓
+NPN Transistor Driver
+   ↓
+650 nm Laser
+```
+
+### Receiver
+
+<p align="center">
+  <img src="images/hardware/receiver.jpg" alt="FSO Receiver Hardware" width="80%">
+</p>
+
+The receiver consists primarily of:
+
+```text
+650 nm Laser Beam
+       ↓
+BPW34 Photodiode
+       ↓
+LM358 Amplifier
+       ↓
+Arduino Uno
+       ↓
+Computer
+```
+
+---
+
+# 🖼️ Project Setup
+
+<p align="center">
+  <img src="images/project/complete-setup.jpg" alt="Complete FSO Communication Setup" width="90%">
+</p>
+
+The prototype uses a direct line-of-sight arrangement between the laser transmitter and photodiode receiver.
+
+---
+
+# 🔌 Circuit Connections
+
+### Transmitter
+
+Detailed transmitter connections:
+
+👉 [`hardware/transmitter-connections.md`](hardware/transmitter-connections.md)
+
+### Receiver
+
+Detailed receiver connections:
+
+👉 [`hardware/receiver-connections.md`](hardware/receiver-connections.md)
+
+### Circuit Diagram
+
+<p align="center">
+  <img src="images/circuit/circuit-diagram.png" alt="FSO Communication Circuit Diagram" width="90%">
+</p>
+
+> The original circuit diagram is reproduced from the project report where available. Some wiring labels in the report are inconsistent; see the implementation notes below before physically reproducing the circuit.
+
+---
+
+# 💻 Software
+
+The project uses:
+
+| Software / Technology  | Purpose                                 |
+| ---------------------- | --------------------------------------- |
+| Arduino IDE            | Programming and uploading sketches      |
+| C/C++                  | Arduino programming language            |
+| SoftwareSerial         | Additional serial communication channel |
+| Arduino Serial Monitor | User input and recovered output         |
+
+### Arduino Source Code
+
+#### 🔴 Transmitter
+
+[`arduino/transmitter/transmitter.ino`](arduino/transmitter/transmitter.ino)
+
+#### 🔵 Receiver
+
+[`arduino/receiver/receiver.ino`](arduino/receiver/receiver.ino)
+
+The sketches are reproduced from the report's Program Code section with explanatory comments added.
+
+---
+
+# 📡 Communication Demonstration
+
+A typical transmission follows:
+
+```text
+TRANSMITTER                         RECEIVER
+
+Serial Monitor                     Serial Monitor
+      │                                   ▲
+      │                                   │
+      ▼                                   │
+   "HELLO"                                │
+      │                                   │
+      ▼                                   │
+ Arduino Uno                             │
+      │                                   │
+      ▼                                   │
+ OOK Modulation                           │
+      │                                   │
+      ▼                                   │
+ 650 nm Laser  ───────────────►  BPW34
+                                  │
+                                  ▼
+                              LM358
+                                  │
+                                  ▼
+                           Receiver Arduino
+                                  │
+                                  ▼
+                              "HELLO"
+```
+
+### Example
+
+```text
+Transmitter Serial Monitor
+
+Enter message: HELLO
+Sending: HELLO
+```
+
+Receiver:
+
+```text
+Received: HELLO
+```
+
+---
+
+# 📊 Experimental Results
+
+The prototype was tested indoors under clear line-of-sight conditions.
+
+|  Distance | Observed Performance     |
+| --------: | ------------------------ |
+| **1–2 m** | 🟢 Excellent             |
+| **2–3 m** | 🟢 Good / Stable         |
+| **3–7 m** | 🟡 Moderate / Some Noise |
+| **> 7 m** | 🔴 Degraded              |
+
+### Tested Messages
+
+The report documents successful transmission and reception of:
+
+```text
+HELLO
+12345678
+Laser
+```
+
+### Main Environmental Effects
+
+The report identifies:
+
+* ☀️ Sunlight
+* 💡 Artificial light
+* 🌫️ Environmental optical interference
+* 📐 Transmitter/receiver alignment
+
+as factors affecting the received signal.
+
+Optical shielding and a filtering capacitor were used to reduce some of the observed noise effects.
+
+---
+
+# 📈 Distance Performance
+
+```text
+Communication Quality
+
+1–2 m     ████████████████████  Excellent
+2–3 m     █████████████████    Good
+3–7 m     ███████████          Moderate
+>7 m      ██████               Degraded
+```
+
+> The above visualization summarizes the qualitative performance categories reported in the FYP report. It is not a newly measured quantitative performance curve.
+
+---
+
+# 🧪 Experimental Setup
+
+<p align="center">
+  <img src="images/results/distance-test.png" alt="FSO Distance Testing" width="85%">
+</p>
+
+The communication test was performed by maintaining a line of sight between the laser transmitter and photodiode receiver and increasing the separation distance.
+
+---
+
+# 🚧 Limitations
+
+The prototype has several practical limitations.
+
+### 1. Line of Sight
+
+The transmitter and receiver require a clear optical path.
+
+### 2. Environmental Conditions
+
+Fog, rain, dust, and other optical disturbances can affect the communication channel.
+
+### 3. Alignment
+
+Because the laser beam is directional, accurate alignment between the transmitter and receiver is important.
+
+### 4. Processing Speed
+
+The communication speed is limited by the timing and processing behavior of the Arduino-based implementation.
+
+### 5. Ambient Light
+
+Sunlight and artificial lighting can introduce unwanted optical signal components at the receiver.
+
+---
+
+# 🚀 Applications & Future Work
+
+The project report discusses several possible directions for the underlying FSO technology.
+
+### Potential Applications
+
+* 🌙 Moon–Earth / Earth–Moon optical communication
+* 🛰️ Satellite communication
+* 🚀 Space and deep-space communication
+* 🔐 Secure / directional optical communication
+* 💡 Li-Fi and optical wireless communication
+* 🏭 Industrial automation
+* 🏥 Optical communication technologies in medical environments
+
+> **Scope clarification:** These are potential applications or future extensions discussed in the report. The current Arduino prototype should not be interpreted as demonstrating these systems.
+
+### Possible Technical Improvements
+
+Future development could investigate:
+
+* Higher-speed optical modulation
+* Improved photodiode amplification
+* Automatic beam alignment
+* Better ambient-light filtering
+* Higher-performance optical receivers
+* Error detection and correction
+* Longer communication distances
+* Improved mechanical mounting
+* More efficient laser driver circuitry
+* Digital signal processing at the receiver
+
+---
+
+# 📁 Repository Structure
 
 ```text
 free-space-optical-communication-arduino/
-├── README.md
-├── LICENSE
-├── .gitignore
 │
-├── docs/
-│   ├── project-report.pdf
-│   ├── project-overview.md
-│   ├── system-architecture.md
-│   └── results.md
+├── 📄 README.md
+├── 📄 LICENSE
+├── 📄 .gitignore
 │
-├── arduino/
-│   ├── transmitter/
-│   │   └── transmitter.ino
-│   └── receiver/
-│       └── receiver.ino
+├── 📂 docs/
+│   ├── 📄 project-report.pdf
+│   ├── 📄 project-overview.md
+│   ├── 📄 system-architecture.md
+│   └── 📄 results.md
 │
-├── hardware/
-│   ├── components.md
-│   ├── transmitter-connections.md
-│   ├── receiver-connections.md
-│   └── circuit-diagram/
+├── 📂 arduino/
+│   │
+│   ├── 📂 transmitter/
+│   │   └── 📄 transmitter.ino
+│   │
+│   └── 📂 receiver/
+│       └── 📄 receiver.ino
 │
-├── images/
-│   ├── project/
-│   ├── circuit/
-│   ├── hardware/
-│   └── results/
+├── 📂 hardware/
+│   ├── 📄 components.md
+│   ├── 📄 transmitter-connections.md
+│   ├── 📄 receiver-connections.md
+│   └── 📂 circuit-diagram/
 │
-└── references/
-    └── references.md
+├── 📂 images/
+│   ├── 📂 project/
+│   ├── 📂 circuit/
+│   ├── 📂 hardware/
+│   └── 📂 results/
+│
+└── 📂 references/
+    └── 📄 references.md
 ```
 
-## Implementation Notes / Report Clarifications
+---
 
-The report contains a few internal inconsistencies. Rather than silently resolving them, they are documented here and in the relevant hardware docs, with what the report actually says on each side:
+# 🔍 Implementation Notes & Report Clarifications
 
-- **Transistor part number:** Table 2.1 and Section 2.1.5 call it a "2N2222 Transistor"; Section 3.3.1 and the circuit diagram (Figure 3.2) call it a "BC547." The report does not state which was actually used, or whether the labels were used loosely. See [hardware/components.md](hardware/components.md#implementation-note--transistor-part-number).
-- **Receiver output pin:** the written wiring description (Section 3.2.2) sends the LM358 output to "Arduino Digital pin 2," matching the receiver code's `SoftwareSerial(2, 3)`. The circuit diagram (Figure 3.2) instead labels this connection "Digital Pin 8." See [hardware/receiver-connections.md](hardware/receiver-connections.md#implementation-note--arduino-pin-receiving-the-amplified-signal).
-- **Transmitter drive pin:** the written wiring description refers only to "the Arduino data pin," while the circuit diagram labels it "Digital Pin 9"; the transmitter code instead drives the laser stage via `SoftwareSerial` TX on pin 3. See [hardware/transmitter-connections.md](hardware/transmitter-connections.md#implementation-note--arduino-pin-used-to-drive-the-laser).
-- **Resistor value list:** the summary component table (Table 2.1) lists only "1 kΩ, 10 kΩ, 220 Ω" resistors, but the detailed wiring in Section 3.2 also calls for a 10–47 Ω emitter resistor and a 100 kΩ feedback resistor. See [hardware/components.md](hardware/components.md#implementation-note--resistor-values).
-- **Project title wording:** the report's cover page reads "...Using Laser **Diode** and Arduino," while its certificate page reads "...Using Laser **Module** and Arduino." This repository uses the cover-page title.
+The original FYP report contains several internal inconsistencies.
 
-None of these are claimed here as experimentally verified beyond what the report itself establishes — they are flagged so anyone reproducing the prototype can check their own hardware against both versions.
+Rather than silently changing the reported information, this repository documents those inconsistencies so that anyone attempting to reproduce the project can verify the hardware and connections.
 
-## References
+<details>
+<summary><b>🔧 Transistor Part Number</b></summary>
 
-See [references/references.md](references/references.md) for the full list as given in the report, including the Arduino, TinkerCAD, and component datasheet references cited.
+The report contains two different transistor designations:
 
-## Authors
+* Table 2.1 → **2N2222**
+* Section 2.1.5 → **2N2222**
+* Section 3.3.1 → **BC547**
+* Circuit diagram → **BC547**
 
-Final Year Project, BS Physics (Session 2021–25), Department of Physics, Government Graduate College, Sahiwal — supervised by Mr. M. Khalid Saleem.
+The report does not definitively establish which transistor was physically used.
 
-- Arslan Maqsood
-- Muhammad Talha
-- Muhammad Sajid
-- Muhammad Azam Mustafa
-- Muhammad Danish
-- Sajid Ali
+See:
 
-## License
+[`hardware/components.md`](hardware/components.md)
 
-Released under the [MIT License](LICENSE).
+</details>
+
+<details>
+<summary><b>🔌 Receiver Arduino Pin</b></summary>
+
+The written wiring description identifies Arduino Digital Pin 2 as the input from the LM358 output, which is consistent with:
+
+```cpp
+SoftwareSerial(2, 3)
+```
+
+However, the circuit diagram labels the connection as Digital Pin 8.
+
+See:
+
+[`hardware/receiver-connections.md`](hardware/receiver-connections.md)
+
+</details>
+
+<details>
+<summary><b>🔴 Transmitter Drive Pin</b></summary>
+
+The written wiring description refers generally to the Arduino data pin.
+
+The circuit diagram identifies Digital Pin 9.
+
+However, the transmitter code uses the `SoftwareSerial` TX connection on pin 3.
+
+See:
+
+[`hardware/transmitter-connections.md`](hardware/transmitter-connections.md)
+
+</details>
+
+<details>
+<summary><b>🔩 Resistor Values</b></summary>
+
+The summary component table lists:
+
+```text
+1 kΩ
+10 kΩ
+220 Ω
+```
+
+The detailed wiring section additionally mentions:
+
+```text
+10–47 Ω emitter resistor
+100 kΩ feedback resistor
+```
+
+These values should therefore be checked against the physical prototype before reproduction.
+
+See:
+
+[`hardware/components.md`](hardware/components.md)
+
+</details>
+
+<details>
+<summary><b>📘 Project Title</b></summary>
+
+The report uses slightly different wording in different sections:
+
+**Cover page:**
+
+> Free Space Optical Communication System Using Laser Diode and Arduino
+
+**Certificate page:**
+
+> Free Space Optical Communication System Using Laser Module and Arduino
+
+This repository follows the cover-page title.
+
+</details>
+
+---
+
+# 📚 Documentation
+
+| Document                                                            | Description                             |
+| ------------------------------------------------------------------- | --------------------------------------- |
+| [`project-report.pdf`](docs/project-report.pdf)                     | Complete FYP report                     |
+| [`project-overview.md`](docs/project-overview.md)                   | Problem statement, objectives and scope |
+| [`system-architecture.md`](docs/system-architecture.md)             | Communication architecture              |
+| [`results.md`](docs/results.md)                                     | Experimental results and discussion     |
+| [`components.md`](hardware/components.md)                           | Hardware components                     |
+| [`transmitter-connections.md`](hardware/transmitter-connections.md) | Transmitter wiring                      |
+| [`receiver-connections.md`](hardware/receiver-connections.md)       | Receiver wiring                         |
+| [`references.md`](references/references.md)                         | Project references                      |
+
+---
+
+# ▶️ Getting Started
+
+## Requirements
+
+### Hardware
+
+* 2 × Arduino Uno
+* 1 × 650 nm laser module
+* 1 × BPW34 photodiode
+* 1 × LM358 op-amp
+* 1 × NPN transistor
+* Resistors
+* Breadboard
+* Jumper wires
+* Power supply
+* Two computers with Arduino IDE / Serial Monitor
+
+### Software
+
+* Arduino IDE
+* Arduino `SoftwareSerial` library
+
+---
+
+## Installation
+
+### Step 1 — Clone the Repository
+
+```bash
+git clone https://github.com/YOUR-USERNAME/free-space-optical-communication-arduino.git
+```
+
+### Step 2 — Open the Transmitter Code
+
+```text
+arduino/
+└── transmitter/
+    └── transmitter.ino
+```
+
+Open the sketch in Arduino IDE.
+
+### Step 3 — Upload to the Transmitter Arduino
+
+Connect the first Arduino Uno and upload:
+
+```text
+transmitter.ino
+```
+
+### Step 4 — Upload Receiver Code
+
+Connect the second Arduino Uno and upload:
+
+```text
+receiver.ino
+```
+
+### Step 5 — Assemble the Hardware
+
+Follow the documented wiring:
+
+* [`Transmitter Connections`](hardware/transmitter-connections.md)
+* [`Receiver Connections`](hardware/receiver-connections.md)
+
+### Step 6 — Align the Laser
+
+Place the transmitter and receiver so that the laser beam is directed toward the BPW34 photodiode.
+
+### Step 7 — Open Serial Monitors
+
+Open the Serial Monitor on both computers.
+
+Enter a message on the transmitter side and observe the recovered message at the receiver.
+
+---
+
+# ⚠️ Safety Note
+
+The project uses a visible laser source.
+
+Avoid direct or reflected exposure to the eyes and use appropriate precautions when operating the optical transmitter.
+
+The laser should be handled responsibly and operated only in a controlled experimental environment.
+
+---
+
+# 📖 References
+
+The complete reference list is available here:
+
+👉 [`references/references.md`](references/references.md)
+
+The references include the sources documented in the original FYP report, including Arduino resources, TinkerCAD, component information, and related technical references.
+
+---
+
+# 👨‍🔬 Authors
+
+### BS Physics Final Year Project — Session 2021–25
+
+**Department of Physics**
+**Government Graduate College, Sahiwal**
+
+### Project Team
+
+|  # | Name                      |
+| -: | ------------------------- |
+|  1 | **Arslan Maqsood**        |
+|  2 | **Muhammad Talha**        |
+|  3 | **Muhammad Sajid**        |
+|  4 | **Muhammad Azam Mustafa** |
+|  5 | **Muhammad Danish**       |
+|  6 | **Sajid Ali**             |
+
+### 👨‍🏫 Supervisor
+
+**Mr. M. Khalid Saleem**
+
+Department of Physics
+Government Graduate College, Sahiwal
+
+---
+
+# 🎓 Academic Context
+
+This project was completed as a **BS Physics Final Year Project** and combines concepts from:
+
+```text
+Physics
+   │
+   ├── Optics
+   ├── Electromagnetism
+   ├── Photodetection
+   └── Optical Communication
+          │
+          ▼
+Electronics
+   │
+   ├── Operational Amplifiers
+   ├── Transistor Switching
+   ├── Signal Amplification
+   └── Photodiodes
+          │
+          ▼
+Embedded Systems
+   │
+   ├── Arduino
+   ├── Serial Communication
+   └── Digital Data Processing
+```
+
+The project therefore provides a practical connection between **physics, optical communication, electronics, and embedded systems**.
+
+---
+
+# 📌 Project Status
+
+```text
+Project Type       : Academic / Educational Prototype
+Communication      : Free-Space Optical
+Optical Source     : 650 nm Laser
+Modulation         : On-Off Keying (OOK)
+Receiver           : BPW34 Photodiode
+Amplifier          : LM358
+Controller         : Arduino Uno ×2
+Test Environment   : Indoor / Line of Sight
+Reported Distance  : Approximately 8 m
+Data Type          : Text
+Status              : Completed FYP Prototype
+```
+
+---
+
+# 📄 License
+
+This project is released under the **MIT License**.
+
+See [`LICENSE`](LICENSE) for the complete license text.
+
+---
+
+<p align="center">
+
+### 🔴 Light → Data → Distance
+
+<b>A simple optical communication concept implemented as a practical physics prototype.</b>
+
+<br><br>
+
+⭐ If this project is useful for your research or learning, consider starring the repository.
+
+</p>
+
+---
+
+<p align="center">
+  <sub>
+    Free Space Optical Communication System • BS Physics FYP • Government Graduate College, Sahiwal
+  </sub>
+</p>
+```
+
+### A few important improvements I recommend
+
+For the **best-looking GitHub page**, don't put every photo directly into the README. Use the README as the presentation layer and keep the detailed photographs in `images/`.
+
+Your most important images should be:
+
+1. **`images/project/fso-hero.png`** — the banner/hero image.
+2. **`images/project/complete-setup.jpg`** — full transmitter-to-receiver setup.
+3. **`images/hardware/transmitter.jpg`** — transmitter close-up.
+4. **`images/hardware/receiver.jpg`** — receiver close-up.
+5. **`images/circuit/circuit-diagram.png`** — circuit diagram.
+6. **`images/results/serial-output.png`** — actual `HELLO → HELLO` transmission.
+7. **`images/results/distance-test.png`** — your distance experiment.
+
+**One important point:** I intentionally kept your report's inconsistencies documented rather than "fixing" them in the README. That makes the repository more academically credible and reproducible, especially if a professor or researcher checks the GitHub project against the original FYP report.
