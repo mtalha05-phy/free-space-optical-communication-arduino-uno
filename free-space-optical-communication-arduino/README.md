@@ -296,7 +296,7 @@ The references include the sources documented in the original FYP report, includ
 
 ### 👨‍🏫 Supervisor
 
-**Mr. M. Khalid Saleem**
+**Mr. Shahzad Ali Nasir**
 
 Assosiate Professor Department of Physics
 Government Graduate College, Sahiwal
