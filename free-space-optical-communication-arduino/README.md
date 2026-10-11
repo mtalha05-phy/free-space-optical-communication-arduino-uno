@@ -10,16 +10,16 @@ The recovered message is finally displayed on the receiver computer through the 
 
 ## ✨ Key Features
 
-- 🔴 650 nm laser-based optical transmitter
-- 📡 Point-to-point free-space optical communication
-- 💡 On-Off Keying (OOK) digital modulation
-- 🔬 BPW34 photodiode optical receiver
-- ⚡ LM358-based signal amplification
-- 🔌 Two Arduino Uno boards for processing
-- 💻 Serial Monitor based text transmission
-- 📏 Indoor communication testing up to approximately **8 m**
-- 🧪 Low-cost prototype using readily available components
-- 🛠️ Designed primarily for educational and prototyping purposes
+-  650 nm laser-based optical transmitter
+-  Point-to-point free-space optical communication
+-  On-Off Keying (OOK) digital modulation
+-  BPW34 photodiode optical receiver
+-  LM358-based signal amplification
+-  Two Arduino Uno boards for processing
+-  Serial Monitor based text transmission
+-  Indoor communication testing up to approximately **8 m**
+-  Low-cost prototype using readily available components
+-  Designed primarily for educational and prototyping purposes
 
 ---
 
@@ -184,10 +184,10 @@ The prototype was tested indoors under clear line-of-sight conditions.
 
 The report identifies:
 
-* ☀️ Sunlight
-* 💡 Artificial light
-* 🌫️ Environmental optical interference
-* 📐 Transmitter/receiver alignment
+*  Sunlight
+*  Artificial light
+*  Environmental optical interference
+*  Transmitter/receiver alignment
 
 as factors affecting the received signal.
 
@@ -231,13 +231,13 @@ The project report discusses several possible directions for the underlying FSO 
 
 ### Potential Applications
 
-* 🌙 Moon–Earth / Earth–Moon optical communication
-* 🛰️ Satellite communication
-* 🚀 Space and deep-space communication
-* 🔐 Secure / directional optical communication
-* 💡 Li-Fi and optical wireless communication
-* 🏭 Industrial automation
-* 🏥 Optical communication technologies in medical environments
+*  Moon–Earth / Earth–Moon optical communication
+*  Satellite communication
+*  Space and deep-space communication
+*  Secure / directional optical communication
+*  Li-Fi and optical wireless communication
+*  Industrial automation
+*  Optical communication technologies in medical environments
 
 > **Scope clarification:** These are potential applications or future extensions discussed in the report. The current Arduino prototype should not be interpreted as demonstrating these systems.
 
